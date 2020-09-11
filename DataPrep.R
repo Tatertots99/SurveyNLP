@@ -19,16 +19,15 @@ tokens1 <- tokens(corpus1, what = "word", remove_punct = TRUE,
                     remove_numbers = TRUE)
 
 #clean tokens
-#tokens1<- tokens_select(tokens1, c(), selection = "remove")
-#tokens1 <- tokens_wordstem(tokens1)
+tokens1<- tokens_select(tokens1, selection = "remove", stopwords('en'))
+tokens1 <- tokens_wordstem(tokens1)
 #tokens1 <- tokens_tolower(tokens1)
 #tokens1<- tokens_select(tokens1, min_nchar = 3)
-
 
 #create the doc-feature matrix for 1 word
 dfm1<- dfm(tokens1, remove = stopwords())
 
-context <- kwic(tokens1, "biodiversity", window = 6)
+context <- kwic(tokens1, "plastic", window = 6)
 View(as.data.frame(context))
 
 topfeatures(dfm1, 100)
@@ -36,7 +35,6 @@ freq_words <- textstat_frequency(dfm1)
 freq_words
 
 #creaete dfm for 2 words
-tokens1<- tokens_select(tokens1, selection = "remove", stopwords('en'))
 tok2 <- tokens_ngrams(tokens1, n=2)
 dfm2<- dfm(tok2, remove = stopwords())
 topfeatures(dfm2, 30)
